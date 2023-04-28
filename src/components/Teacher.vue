@@ -19,10 +19,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr >
-                            <td class="table-item">1</td>
+                        <tr v-for="(users, index) in this.users" :key="index">
+                            <td class="table-item"> {{users.id}} </td>
                             <td class="table-item">Фамилия</td>
-                            <td class="table-item">Имя</td>
+                            <td class="table-item">{{users.name}}</td>
                             <td class="table-item">Отчество</td>
                             <td class="table-item">Должность</td>
                             <td class="table-item">Ученое звание</td>
@@ -34,24 +34,6 @@
                               <button class="table-btn">Удалить</button>
                             </td>
                         </tr>
-                        <tr >
-                            <td class="table-item">2</td>
-                            <td class="table-item">Фамилия</td>
-                            <td class="table-item">Имя</td>
-                            <td class="table-item">Отчество</td>
-                            <td class="table-item">Должность</td>
-                            <td class="table-item">Ученое звание</td>
-                            <td class="table-item">Ученая степень</td>
-                            <td class="table-item">Логин</td>
-                            <td class="table-item">Пароль</td>
-                            <td class="table-item">
-                              <button class="table-btn">Редактировать</button>
-                              <button class="table-btn">Удалить</button>
-                            </td>
-                        </tr>
-                      
-                     
-                   
                     </tbody>
                  
                 </table>
@@ -62,13 +44,46 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'teacher',
-    setup () {
+    
+    data () {
         
 
-        return {}
-    }
+        return {
+            users: []
+            
+        }
+    },
+    mounted() {
+            
+            this.getUsers();
+
+        },
+
+        methods: {
+          getUsers() {
+
+    
+
+            axios.get('http://localhost:3000/user').then(res => {
+                this.users = res.data
+                console.log(res)
+
+            });
+
+          },
+        //   deleteCard(cardId) {
+        //    if(confirm('Вы уверены, что хотите удалитькарту этого сотрудника?')) {
+        //     axios.delete(`https://63e79c82ac3920ad5be0b369.mockapi.io/project/${cardId}`).then(res => {
+        //         alert('Карта сотрудника удалена');
+        //         this.getCards();
+        //     })
+        //    }
+        //   }  
+        },
 }
 </script>
 
